@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block header %}   {% include 'header.html' %} {% endblock header %}
+{% block banner %} {% include 'banner.html' %} {% endblock banner %}
+{% block content %}
+<!-- content -->
+<div class="container mt-5 mb-5 signup">
+  <h1 class="title text-center text-capitalize mb-4">login here</h1>
+  <div class="row">
+    <div class="col-12">
+      <form action="{% url 'signin'%}" method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">username</label>
+          <input type="text" name="username" class="form-control" id="exampleFormControlInput1">
+        </div>
+        <div class="mb-3" class="pass">
+          <label for="exampleFormControlInput1" class="form-label">password</label>
+          <input type="password"  name="password" class="form-control input" id="exampleFormControlInput1">
+          <div class="see">
+            <i class="bi bi-eye-fill"></i>
+            <i class="bi bi-eye-slash-fill"></i>
+          </div>
+        </div>
+        <div class="mb-3">
+          <button class="btn btn-primary">Login</button>
+        </div>
+        <p class="text-capitalize mt-4">don't hava an account? <a href=""><span>sign up</span></a></p>
+      </form>
+    </div>
+  </div>
+ </div>
+<!-- content done -->
+{% endblock content %}
+
+{% block footer %}   {% include 'footer.html' %} {% endblock footer %}

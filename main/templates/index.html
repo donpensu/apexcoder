@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block header %}   
+  {% include 'header.html' %}
+{% endblock header %}
+{% block carousel %}
+    {% include 'carousel.html' %}
+{% endblock carousel %}
+{% block content %}
+<div class="container mb-5">
+    <h1 class="text-center title text-capitalize mt-5 mb-5">top selling products</h1>
+    <div class="row">
+    
+      {% for item in top %}
+        <div class="col-12 col-md-6 col-lg-3 tcard">
+          <div class="card">
+            <a href="{% url 'detail' item.id %}"><img src="{{item.pix.url}}" class="card-img-top" alt="..." style="height: 250px;"></a>
+            <div class="card-body">
+              <h5 class="card-title text-capitalize">{{item.title}}</h5>      
+              {% if item.promo_price %}
+              <p class="card-text">₦350,000</p>
+              <del><p class="card-text">N{{item.price}}</p></del>
+              {% else %}
+              <p class="card-text">N{{item.price}}</p>
+              {% endif %}
+              <form action="{% url 'add_to_cart' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="itemid" value="{{item.id}}">
+                <input type="hidden" name="quantity" value="1">
+                <button type="submit" class="btn btn-primary">Add to Cart</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+</div>
+
+<div class="container-fluid mt-5 mb-5 catbag">
+  <h1 class="text-center title mt-5 mb-7">Browse By Categories</h1>
+  <div class="row catrow">
+   
+   {% for category in category %}
+     <div class="col-12 col-md-6 categ">
+      <a href="{% url 'category' category.id category.catslug %}"><img src="{{category.catimg.url}}" alt="" style="height: 300px;"></a>
+      <p class="badge bg-black text-white">Apple</p>
+     </div>
+   {% endfor %}
+  </div>
+</div>
+
+
+<div class="container mb-5">
+  <h1 class="text-center title text-capitalize mt-5 mb-5">featured products</h1>
+  <div class="row">
+    
+    {% for fprod in featured %}
+    <div class="col-12 col-md-6 col-lg-3 tcard">
+      <div class="card">
+          <a href="{% url 'detail' fprod.id %}"><img src="{{fprod.pix.url}}" class="card-img-top" alt="..." style="height: 250px;"></a>
+          <div class="card-body">
+            <h5 class="card-title text-capitalize">{{item.title}}</h5> 
+            {% if fprod.promo_price %}
+            <p class="card-text">₦{{fprod.promo_price}}</p>
+            <del><p class="card-text">N{{fprod.price}}</p></del>
+            {% else %}
+            <p class="card-text">₦{{fprod.price}}</p>
+            {% endif %}
+            <a href="#" class="btn btn-primary">Add to Cart</a>
+          </div>
+        </div>  
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock content %}
+{% block footer %}
+    {% include 'footer.html' %}
+{% endblock footer %}
+    
